@@ -49,7 +49,7 @@
               <div class="form-group text-center">
                 <button class="btn btn-block btn-primary" type="submit">Log Me In</button>
               </div>
-            </form><small>Do not have an account? </small><a href="register.html" class="signup">Signup</a>
+            </form><small>Do not have an account? </small><a href="/New_SaccoManager" class="signup">Signup</a>
           </div>
         </div>
       </div>
