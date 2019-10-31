@@ -20,7 +20,7 @@
         </style>
 
     </head>
-    <body class="container">
+    <body class="container-fluid">
     <nav>
         <div class="nav-wrapper">
             <a href="#" class="brand-logo"><img src="{{ asset('images/mat360.jpg') }}" height="70"></a>
@@ -30,7 +30,17 @@
                 <li><a href="#"><i class="material-icons left">view_module</i>Services</a></li>
                 <li><a href="#">Partners</a></li>
                 <li><a href="#">News</a></li>
-                <li><a href=''><i class="material-icons left">account_circle</i>Accounts</a></li>
+                <li>
+                    <a class='dropdown-trigger' href='#' data-target='dropdown1'><i class="material-icons left">account_circle</i>Accounts</a>
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li class="divider" tabindex="-1"></li>
+                        <li><a href="/login/rider">Rider</a></li>
+                        <li><a href="/login/driver">Driver</a></li>
+                        <li><a href="/login/stagecontroller">Stage Controller</a></li>
+                    </ul>
+
+                </li>
             </ul>
         </div>
     </nav>
@@ -43,7 +53,7 @@
         <li><a href="#">Accounts</a></li>
     </ul>
 
-    <div class="conttainer-fluid">
+    <div class="conttainer">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="row">
@@ -200,6 +210,7 @@
             $(document).ready(function(){
                 $('.sidenav').sidenav();
             });
+            $('.dropdown-trigger').dropdown();
         </script>
     </body>
 </html>
