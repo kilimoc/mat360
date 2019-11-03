@@ -37,7 +37,22 @@
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
           <div class="sidenav-header-inner text-center"><img src="{{asset('images/avatar-3.jpg')}}" alt="person" class="img-fluid rounded-circle">
-            <h3 class="h5">{{Auth::user()->email}}</h3><span>SaccoManager</span>
+
+            <h3 class="h5">
+              @auth('systemadmin')
+                {{Auth::user()->username}}
+              @endauth
+                @auth('saccomanager')
+                  {{Auth::user()->email}}
+                @endauth
+              </h3>
+            @auth('systemadmin')
+              <span>SystemAdmin</span>
+            @endauth
+            @auth('saccomanager')
+              <span>SaccoManager</span>
+            @endauth
+
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
           <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
@@ -68,15 +83,11 @@
           </ul>
         </div>
         @endauth
-        @auth('web')
+        @auth('systemadmin')
         <div class="admin-menu">
-          <h5 class="sidenav-heading">System Administrator</h5>
+          <h6 class="sidenav-heading">System Admin</h6>
           <ul id="side-admin-menu" class="side-menu list-unstyled">
-            <li> <a href="#"> <i class="icon-screen"> </i>New Sacco</a></li>
-            <li> <a href="#"> <i class="icon-flask"> </i>Demo
-                <div class="badge badge-info">Special</div></a></li>
-            <li> <a href=""> <i class="icon-flask"> </i>Demo</a></li>
-            <li> <a href=""> <i class="icon-picture"> </i>Demo</a></li>
+            <li> <a href="{{route('newSaccoForm')}}"> <i class="icon-screen"> </i>New Sacco</a></li>
           </ul>
         </div>
           @endauth
@@ -89,7 +100,13 @@
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
               <div class="navbar-header"><a id="toggle-btn" href="{{route('smdashboard')}}" class="menu-btn"><i class="icon-bars"> </i></a><a href="{{route('smdashboard')}}" class="navbar-brand">
-                  <div class="brand-text d-none d-md-inline-block"><span>SaccoManager </span><strong class="text-primary">Dashboard</strong></div></a></div>
+                  <div class="brand-text d-none d-md-inline-block"><span>
+                      @auth('systemadmin')
+                       SystemAdmin
+                      @endauth
+                      @auth('saccomanager')
+                       SaccoManager
+                      @endauth</span><strong class="text-primary">Dashboard</strong></div></a></div>
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications dropdown-->
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>

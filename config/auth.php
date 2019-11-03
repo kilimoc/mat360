@@ -50,6 +50,10 @@ return [
             'driver' => 'session',
             'provider' => 'saccomanagers',
         ],
+        'systemadmin' => [
+            'driver' => 'session',
+            'provider' => 'systemadmins',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -83,6 +87,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\SaccoManager::class,
         ],
+        'systemadmins' => [
+            'driver' => 'eloquent',
+            'model' => App\SystemAdmin::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -114,6 +122,12 @@ return [
         ],
         'saccomanagers' => [
             'provider' => 'saccomanagers',
+            'table' => 'password_resets',
+            'expire' => 15,
+            'throttle' => 15,
+        ],
+        'systemadmins' => [
+            'provider' => 'systemadmins',
             'table' => 'password_resets',
             'expire' => 15,
             'throttle' => 15,

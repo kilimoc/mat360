@@ -35,31 +35,33 @@ class SystemUsersController extends Controller
 
 
     public function storeSaccoManagerDetails(Request $request){
-        $this->validate($request,[
-            'fname'=>'required|max:30',
-            'lname'=>'required|max:30',
-            'idnumber'=>'required|max:8',
-            'phone'=>'required|max:10',
-            'email'=>'required|email|max:50',
-            'password'=>'required',
-            'cpassword'=>'required'
-        ]);
-        $saccoManager=new SaccoManager();
+     $saccoManager=new SaccoManager();
+     $this->validate($request,[
+         'idno'=>'required|max:10',
+         'fname'=>'required',
+         'lname'=>'required',
+         'phone'=>'required|max:10',
+         'email'=>'required|email',
+         'password'=>'required',
+         'cpassword'=>'required'
+     ]);
+
+
 
         $password=$request->input('password');
         $cpassword=$request->input('cpassword');
         if($cpassword!=$password){
-            return redirect('/New_SaccoManager')->with('error','Password do not match.Enter matching passwords');
+            return back()->with('error','Password do not match.Enter matching passwords');
         }
         else{
             $saccoManager->first_name=$request->input('fname');
             $saccoManager->last_name=$request->input('lname');
-            $saccoManager->id_number=$request->input('idnumber');
+            $saccoManager->id_number=$request->input('idno');;
             $saccoManager->phone=$request->input('phone');
             $saccoManager->email=$request->input('email');
             $saccoManager->password=Hash::make($password);
             $saccoManager->save();
-            return redirect('/New_SaccoManager')->with('success','You have been Successfully Registered.');
+            return back()->with('success','You have been Successfully Registered.');
         }
 
 

@@ -24,6 +24,9 @@ class RedirectIfAuthenticated
         if($guard=='saccomanager' && Auth::guard($guard)->check()){
             return redirect('/SaccoManager');
         }
+        if($guard=='systemadmin' && Auth::guard($guard)->check()){
+            return redirect(route('systemadmindashboard'));
+        }
 
         return $next($request);
     }

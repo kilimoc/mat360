@@ -38,10 +38,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('guest:saccomanager')->except('logout');
+        $this->middleware('guest:systemadmin')->except('logout');
     }
 
     public function showSaccoManagerLoginForm(){
         return view('login',['url'=>'saccomanager']);
+    }
+
+    //Show SystemAdmin Page
+    public function showSystemAdminLoginForm(){
+        return view('accounts.admin-login',['url'=>'systemadmin']);
     }
 
     public function saccoManagerLogin(Request $request){
@@ -58,6 +64,22 @@ class LoginController extends Controller
         return back()->withInput($request->only('email','remember'));
     }
 
+
+
+    //Login System Administrator;
+    public function systemAdministratorLogin(Request $request){
+        $this->validate($request,[
+            'username'=>'required|max:20',
+            'password'=>'required|min:6'
+
+        ]);
+
+        if (Auth::guard('systemadmin')->attempt(['username'=>$request->username,'password'=>$request->password],$request->get('remember'))){
+
+            return redirect()->intended(route('systemadmindashboard'));
+        }
+        return back()->with('error','Login Details are wrong');
+    }
  //Logout User;
     public function logout(Request $request)
     {

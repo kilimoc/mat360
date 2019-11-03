@@ -13,6 +13,7 @@ class SaccoManagerController extends Controller
     public function __construct()
     {
         $this->middleware('auth:saccomanager');
+
     }
 
     public function myDashBoard(){
@@ -33,7 +34,7 @@ class SaccoManagerController extends Controller
 
         $ownerObj=new Owner();
         //Check if the ID exists
-        if(!empty($this->checkIdExistence('owners',$request->input('idno')))){
+        if(!empty($this->checkIdExistence('owners',$request->input('idno'),'id_number'))){
             return back()->with('error','Id Number is already registered');
         }
         else{
@@ -63,7 +64,7 @@ class SaccoManagerController extends Controller
 
         $driverObj=new Driver();
         //Check if the ID exists
-        if(!empty($this->checkIdExistence('drivers',$request->input('idno')))){
+        if(!empty($this->checkIdExistence('drivers',$request->input('idno'),'id_number'))){
             return back()->with('error','Id Number is already registered');
         }
         else{
@@ -113,7 +114,7 @@ class SaccoManagerController extends Controller
 
         $vehicleObj=new Vehicle();
         //Check if the driver and the owner has been registered;
-       if(!empty($this->checkIdExistence('drivers',$request->input('driverID'))) && !empty($this->checkIdExistence('owners',$request->input('ownerID'))) ){
+       if(!empty($this->checkIdExistence('drivers',$request->input('driverID'),'id_number')) && !empty($this->checkIdExistence('owners',$request->input('ownerID'),'id_number')) ){
             //Here we register
            //Register the new Owner
            $vehicleObj->reg_number=$request->input('regno');
@@ -131,14 +132,14 @@ class SaccoManagerController extends Controller
     }
     //Get All Vehicles;
 public function getAllVehicles(){
-        $vehicles=Vehicle::all();
+        $vehicles=DB::table('vehicles')->join('drivers','vehicles.driver_id','=','drivers.id_number')->join('owners','vehicles.owner_id','=','owners.id_number')->select('vehicles.*','drivers.*','owners.first_name as ofname','owners.last_name as olname','owners.phone as ophone')->get();
         return view('saccomanager.all_vehicles')->with('vehicles',$vehicles);
 }
 
 
     //These are custom functions
-    public function checkIdExistence($table,$idnumber){
-        $idnumber=DB::table($table)->where('id_number',$idnumber)->value('id_number');
+    public function checkIdExistence($table,$idnumber,$column){
+        $idnumber=DB::table($table)->where($column,$idnumber)->value($column);
         return $idnumber;
     }
 

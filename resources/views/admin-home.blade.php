@@ -1,4 +1,4 @@
-@extends('saccomanager.smdashboardlayout')
+@extends('saccomanager.superdashboardlayout')
 <!-- Counts Section -->
 @section('content')
 

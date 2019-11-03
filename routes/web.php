@@ -8,8 +8,6 @@ Route::get('/', function () {
 Route::post('/logout','Auth\LoginController@logout')->name('logout');
 
 Route::get('/CreateAccount','PagesController@showAccountCreation')->name('showAccountCreation');
-Route::get('/New_SaccoManager','SystemUsersController@showSaccoManagerRegistrationForm')->name('newSaccoManager');
-Route::post('/New_SaccoManager','SystemUsersController@storeSaccoManagerDetails')->name('newSaccoManager.submit');
 Route::post('/CreateAccount','SystemUsersController@createSystemUser')->name('showAccountCreation.submit');
 
 
@@ -41,6 +39,28 @@ Route::prefix('SaccoManager')->group(function (){
     Route::get('/All_Vehicles','SaccoManagerController@getAllVehicles')->name('allVehicles');
 
 });
+
+//System Admin
+Route::prefix('systemadmin')->group(function () {
+    Route::get('/login','Auth\LoginController@showSystemAdminLoginForm')->name('adminLogin');
+    Route::post('/login','Auth\LoginController@systemAdministratorLogin')->name('systemadmin-login.submit');
+});
+
+//System Administrator;
+Route::prefix('SystemAdministrator')->group(function (){
+    Route::get('','SystemAdminController@myDashBoard')->name('systemadmindashboard');
+    Route::get('New_Sacco','SystemAdminController@showNewSaccoRegistrationForm')->name('newSaccoForm');
+    Route::post('New_Sacco','SystemAdminController@saveSaccoDetails')->name('newSaccoForm.submit');
+
+});
+
+//Route
+Route::get('confirm_registration','PagesController@showConfirmRegistrationForm')->name('confirmRegistration');
+Route::post('confirm_registration','PagesController@confirmRegistration')->name('confirmRegistration.submit');
+
+Route::get('complete_registration/{idnumber}','PagesController@showCompleteRegistrationForm')->name('completeregistration');
+Route::post('complete_registration','SystemUsersController@storeSaccoManagerDetails')->name('newSaccoManager.submit');
+
 
 
 
